@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <style>
+/* Fundo gradiente para a página */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Gradiente mais escuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Container principal para centralizar o conteúdo */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo para o formulário de entrada de nomes */
+#nameEntry {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#nameEntry input {
+    margin: 5px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+#nameEntry button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #2ecc71; /* Verde */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#nameEntry button:hover {
+    background-color: #27ae60; /* Verde mais escuro */
+}
+
+/* Estilo para o título */
+h1 {
+    font-family: 'Verdana', sans-serif;
+    font-size: 4em;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(90deg, #3498db, #2ecc71); /* Gradiente azul e verde */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+h2{
+    font-size: 30px;
+    font-weight: 900;
+}
+
+/* Estilo para o container do status e placar */
+#status {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Estilo para o placar */
+#scoreboard {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.score {
+    margin: 0 10px;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+/* Container para os botões */
+#buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo para o botão de reset */
+#resetButton {
+    display: block;
+    width: 120px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#resetButton:hover {
+    background-color: #ff4d4d;
+}
+
+/* Estilo para o botão de alterar nomes */
+#changeNamesButton {
+    display: block;
+    width: 150px;
+    padding: 10px;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #3498db; /* Azul */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#changeNamesButton:hover {
+    background-color: #2980b9; /* Azul mais escuro */
+    
+}
+
+/* Estilo para o tabuleiro */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 5px;
+    background-color: #333; /* Cor de fundo do tabuleiro */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para as células do tabuleiro */
+.cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    border: 2px solid #fff;
+    cursor: pointer;
+    background-color: #444;
+    transition: background-color 0.3s, color 0.3s;
+    color: #fff;
+}
+
+.cell:hover {
+    background-color: #555;
+}
+
+.cell.X {
+    color: #3498db; /* Azul para X */
+}
+
+.cell.O {
+    color: #e74c3c; /* Vermelho para O */
+}
+
+/* Esconder a seção de nomes quando o jogo começa */
+#nameEntry.hidden {
+    display: none;
+}
+
+#playerX, #playerO{
+    border-radius: 10px;
+    border: none;
+
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+    
+    #nameEntry input {
+        font-size: 0.9em;
+    }
+
+    #nameEntry button {
+        font-size: 0.9em;
+    }
+
+    .score {
+        font-size: 1em;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <body>
+        <body>
+            <div class="container">
+                <div id="nameEntry">
+                    <h2>Insira os nomes dos jogadores</h2>
+                    <label for="playerX">Nome do Jogador X:</label>
+                    <input type="text" id="playerX" placeholder="Nome do Jogador X">
+                    <label for="playerO">Nome do Jogador O:</label>
+                    <input type="text" id="playerO" placeholder="Nome do Jogador O">
+                    <button id="startButton">Iniciar Jogo</button>
+                </div>
+                <h1>Jogo da Velha</h1>
+                <div id="status">Insira os nomes e clique em "Iniciar Jogo"</div>
+                <div id="scoreboard">
+                    <div class="score">Vitórias X: <span id="xWins">0</span></div>
+                    <div class="score">Vitórias O: <span id="oWins">0</span></div>
+                    <div class="score">Empates: <span id="draws">0</span></div>
+                </div>
+                <div class="grid">
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                    <div class="cell" data-cell></div>
+                </div>
+                <div id="buttons">
+                    <button id="resetButton">Resetar</button>
+                    <button id="changeNamesButton">Alterar Nomes</button>
+                </div>
+            </div>
+            <script src="script.js"></script>
+        </body>
+        
+    
+    
+</html>
